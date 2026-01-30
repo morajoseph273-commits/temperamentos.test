@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Test de Temperamentos - Basado en Grok</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+        h1 { text-align: center; color: #333; }
+        .question { margin-bottom: 20px; }
+        .question label { display: block; margin: 5px 0; }
+        button { display: block; margin: 20px auto; padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #result { margin-top: 30px; padding: 20px; background-color: white; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Mini-Test de los 4 Temperamentos</h1>
+    <p>Basado en la teoría de Hipócrates y adaptado por Grok (xAI). Responde honestamente. Puedes elegir más de una opción por pregunta si te identificás con varias.</p>
+
+    <form id="quizForm">
+        <!-- Pregunta 1 -->
+        <div class="question">
+            <p>1. En una fiesta o reunión grande con gente nueva:</p>
+            <label><input type="checkbox" name="q1" value="A"> A) Soy el que anima todo, hablo con todos, me divierto mucho y hago chistes.</label>
+            <label><input type="checkbox" name="q1" value="B"> B) Tomo el control: organizo juegos, decido qué hacer, lidero el grupo.</label>
+            <label><input type="checkbox" name="q1" value="C"> C) Me quedo más observando, converso en profundidad con 1-2 personas, o me voy temprano si me aburro.</label>
+            <label><input type="checkbox" name="q1" value="D"> D) Estoy cómodo, escucho, ayudo si alguien necesita algo, pero no busco ser el centro.</label>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div class="question">
+            <p>2. Cuando hay un problema o emergencia repentina:</p>
+            <label><input type="checkbox" name="q2" value="A"> A) Me emociono, actúo rápido por impulso, pero a veces me disperso.</label>
+            <label><input type="checkbox" name="q2" value="B"> B) Tomo decisiones firmes y rápidas, digo qué hay que hacer y lo hago ya.</label>
+            <label><input type="checkbox" name="q2" value="C"> C) Pienso mucho en todos los riesgos y detalles antes de actuar, me preocupo.</label>
+            <label><input type="checkbox" name="q2" value="D"> D) Mantengo la calma total, ayudo paso a paso sin alterarme.</label>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div class="question">
+            <p>3. Cómo eres con las metas o tareas:</p>
+            <label><input type="checkbox" name="q3" value="A"> A) Empiezo con mucha energía y entusiasmo, pero a veces dejo cosas a medias.</label>
+            <label><input type="checkbox" name="q3" value="B"> B) Voy a full hasta terminar, odio fallar, soy muy competitivo.</label>
+            <label><input type="checkbox" name="q3" value="C"> C) Planifico todo al detalle, quiero que salga perfecto, me cuesta empezar si no está bien.</label>
+            <label><input type="checkbox" name="q3" value="D"> D) Hago lo que hay que hacer de forma constante y sin drama, prefiero rutina estable.</label>
+        </div>
+
+        <!-- Pregunta 4 -->
+        <div class="question">
+            <p>4. En el trabajo o estudios, qué te motiva más:</p>
+            <label><input type="checkbox" name="q4" value="A"> A) Estar con gente, pasarla bien, que me reconozcan o elogien.</label>
+            <label><input type="checkbox" name="q4" value="B"> B) Lograr resultados, ganar, tener poder o éxito visible.</label>
+            <label><input type="checkbox" name="q4" value="C"> C) Hacerlo bien, aprender profundo, que sea de calidad o significativo.</label>
+            <label><input type="checkbox" name="q4" value="D"> D) Paz, armonía, ayudar a otros, evitar conflictos.</label>
+        </div>
+
+        <!-- Pregunta 5 -->
+        <div class="question">
+            <p>5. Cómo manejas el estrés o enojo:</p>
+            <label><input type="checkbox" name="q5" value="A"> A) Me enojo rápido pero se me pasa pronto, hablo o río para desahogarme.</label>
+            <label><input type="checkbox" name="q5" value="B"> B) Exploto fuerte si me provocan, pero controlo si vale la pena.</label>
+            <label><input type="checkbox" name="q5" value="C"> C) Me guardo todo, me pongo triste o rumio mucho tiempo.</label>
+            <label><input type="checkbox" name="q5" value="D"> D) Casi no exploto, lo proceso internamente y sigo tranquilo.</label>
+        </div>
+
+        <!-- Pregunta 6 -->
+        <div class="question">
+            <p>6. En relaciones (amigos, pareja, familia):</p>
+            <label><input type="checkbox" name="q6" value="A"> A) Muy expresivo, cariñoso, busco diversión y atención constante.</label>
+            <label><input type="checkbox" name="q6" value="B"> B) Directo, protector, exijo lealtad y respeto.</label>
+            <label><input type="checkbox" name="q6" value="C"> C) Leal y profundo, pero reservado, sensible a críticas.</label>
+            <label><input type="checkbox" name="q6" value="D"> D) Paciente, comprensivo, buen escucha, evito peleas.</label>
+        </div>
+
+        <!-- Pregunta 7 -->
+        <div class="question">
+            <p>7. Qué te describe mejor en una palabra clave:</p>
+            <label><input type="checkbox" name="q7" value="A"> A) Entusiasta / Sociable</label>
+            <label><input type="checkbox" name="q7" value="B"> B) Decidido / Líder</label>
+            <label><input type="checkbox" name="q7" value="C"> C) Perfeccionista / Analítico</label>
+            <label><input type="checkbox" name="q7" value="D"> D) Tranquilo / Paciente</label>
+        </div>
+
+        <!-- Pregunta 8 -->
+        <div class="question">
+            <p>8. Si tuvieras que elegir un rol en un equipo:</p>
+            <label><input type="checkbox" name="q8" value="A"> A) El motivador o el que pone buena onda.</label>
+            <label><input type="checkbox" name="q8" value="B"> B) El jefe o el que toma decisiones.</label>
+            <label><input type="checkbox" name="q8" value="C"> C) El que planea y chequea detalles.</label>
+            <label><input type="checkbox" name="q8" value="D"> D) El que apoya y mantiene todo en equilibrio.</label>
+        </div>
+
+        <button type="button" onclick="calculateResult()">Calcular mi Temperamento</button>
+    </form>
+
+    <div id="result" style="display: none;"></div>
+
+    <script>
+        function calculateResult() {
+            const scores = { A: 0, B: 0, C: 0, D: 0 };
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(q => {
+                const checkboxes = q.querySelectorAll('input[type="checkbox"]:checked');
+                checkboxes.forEach(cb => {
+                    scores[cb.value]++;
+                });
+            });
+
+            // Encontrar el máximo y secundarios
+            const maxScore = Math.max(scores.A, scores.B, scores.C, scores.D);
+            const primary = Object.keys(scores).find(key => scores[key] === maxScore);
+            const types = { A: 'Sanguíneo', B: 'Colérico', C: 'Melancólico', D: 'Flemático' };
+
+            // Secundarios: cualquiera con score >= maxScore - 1 (o ajustá si querés)
+            let secondaries = [];
+            Object.keys(scores).forEach(key => {
+                if (key !== primary && scores[key] >= maxScore - 1) {
+                    secondaries.push(types[key]);
+                }
+            });
+            const secondaryText = secondaries.length > 0 ? `con toques de ${secondaries.join(' + ')}` : 'puro';
+
+            // Definiciones basadas en Grok
+            const descriptions = {
+                A: 'Extrovertido, sociable, entusiasta. Sos el alma de la fiesta, optimista y cariñoso, pero a veces impulsivo o desorganizado.',
+                B: 'Líder nato, decidido, ambicioso. Tomás control, sos directo y orientado a metas, pero podés ser impaciente o dominante.',
+                C: 'Analítico, perfeccionista, profundo. Sos reflexivo, creativo y detallista, pero a veces pesimista o autocrítico.',
+                D: 'Tranquilo, paciente, diplomático. Sos equilibrado, leal y buen escucha, pero a veces pasivo o indeciso.'
+            };
+
+            // Fortalezas y debilidades basadas en Grok
+            const strengths = {
+                A: 'Fácil conexión con gente, energía positiva, adaptable.',
+                B: 'Decisión rápida, liderazgo, resultados concretos.',
+                C: 'Precisión, profundidad, creatividad.',
+                D: 'Calma bajo presión, empatía, estabilidad.'
+            };
+            const weaknesses = {
+                A: 'Dispersión, superficialidad en tareas largas.',
+                B: 'Explosividad, dominancia excesiva.',
+                C: 'Sobrepensar, tendencia a la tristeza.',
+                D: 'Pasividad, lentitud en cambios.'
+            };
+
+            // Encaje con policía (como ejemplo, basado en nuestra charla)
+            let policeFit = '';
+            if (primary === 'D') {
+                policeFit = 'Excelente match: calma y resiliencia para emergencias.';
+            } else if (primary === 'B') {
+                policeFit = 'Bueno para liderazgo, pero controlá impulsos.';
+            } else {
+                policeFit = 'Posible, pero usá tus secundarios para equilibrar.';
+            }
+
+            // Mostrar resultado
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h2>Tu Temperamento Principal: ${types[primary]} (${secondaryText})</h2>
+                <p>${descriptions[primary]}</p>
+                <h3>Fortalezas:</h3><p>${strengths[primary]}</p>
+                <h3>Debilidades:</h3><p>${weaknesses[primary]}</p>
+                <h3>Ejemplo de Encaje Profesional (Oficial de Policía):</h3><p>${policeFit}</p>
+                <p>Puntajes: Sanguíneo: ${scores.A}, Colérico: ${scores.B}, Melancólico: ${scores.C}, Flemático: ${scores.D}</p>
+                <p>Basado en análisis de Grok (xAI) - ¡Compartí con amigos!</p>
+            `;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
