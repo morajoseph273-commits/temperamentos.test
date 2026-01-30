@@ -6,13 +6,13 @@
     <title>Mini-Test de Temperamentos - Grok Edition</title>
     <style>
         :root {
-            --bg: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            --text: #e0e0ff;
-            --accent: #00f0ff;
-            --accent-glow: #00f0ff33;
-            --card: rgba(30, 30, 60, 0.75);
-            --button: #6a0dad;
-            --button-hover: #9d4edd;
+            --bg: linear-gradient(135deg, #09081f, #25224b, #1a1a2e); /* Más oscuro */
+            --text: #d8d8f0;
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.2); /* Glow más sutil */
+            --card: rgba(20, 20, 50, 0.85); /* Cards más opacos */
+            --button: #5a0a9e;
+            --button-hover: #8e3ed6;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,7 +26,7 @@
         h1 {
             text-align: center;
             color: var(--accent);
-            text-shadow: 0 0 15px var(--accent-glow);
+            text-shadow: 0 0 10px var(--accent-glow);
             margin-bottom: 10px;
             animation: fadeIn 1.5s ease-out;
         }
@@ -41,33 +41,39 @@
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,240,255,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,212,255,0.08);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        .question.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         .question:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0,240,255,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,212,255,0.12);
         }
         label {
             display: block;
             margin: 12px 0;
             padding: 12px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             cursor: pointer;
             transition: all 0.3s ease;
         }
         label:hover {
-            background: rgba(0,240,255,0.12);
-            transform: translateX(5px);
+            background: rgba(0,212,255,0.1);
+            transform: translateX(4px);
         }
         input[type="checkbox"]:checked + span {
             color: var(--accent);
             font-weight: bold;
         }
-        button {
+        button, .restart-btn {
             display: block;
             margin: 30px auto;
             padding: 15px 40px;
@@ -77,21 +83,23 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(106,13,173,0.5);
+            box-shadow: 0 0 15px rgba(90,10,158,0.5);
             transition: all 0.4s ease;
+            animation: pulse 2s infinite ease-in-out;
         }
-        button:hover {
+        button:hover, .restart-btn:hover {
             background: var(--button-hover);
-            transform: scale(1.08);
-            box-shadow: 0 0 30px rgba(157,78,221,0.7);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(142,62,214,0.7);
+            animation: none;
         }
         #result {
             margin-top: 40px;
             padding: 30px;
             background: var(--card);
             border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            border: 1px solid rgba(0,240,255,0.15);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            border: 1px solid rgba(0,212,255,0.1);
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease, transform 1s ease;
@@ -102,11 +110,23 @@
         }
         #result h2 {
             color: var(--accent);
-            text-shadow: 0 0 10px var(--accent-glow);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+        #result ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .restart-btn {
+            margin-top: 20px;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
         @keyframes shake {
             0%,100% { transform: translateX(0); }
@@ -191,6 +211,13 @@
     <div id="result"></div>
 
     <script>
+        // Fade-in secuencial para interactividad
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.question').forEach((q, i) => {
+                setTimeout(() => q.classList.add('visible'), 200 * i);
+            });
+        });
+
         function calculateResult() {
             const scores = { A: 0, B: 0, C: 0, D: 0 };
             let answered = false;
@@ -204,7 +231,7 @@
 
             if (!answered) {
                 document.querySelector('button').classList.add('error');
-                setTimeout(() => document.querySelector('button').classList.remove('error'), 600);
+                setTimeout(() => document.querySelector('button').classList.remove('error'), 500);
                 alert('¡Elegí al menos una opción!');
                 return;
             }
@@ -241,17 +268,34 @@
                 D: 'Pasividad, lentitud en cambios.'
             };
 
+            const jobs = {
+                A: '<ul><li>Ventas y marketing</li><li>Entretenimiento (actor, músico)</li><li>Relaciones públicas o eventos</li><li>Periodismo o influencer</li><li>Turismo o enseñanza motivacional</li></ul>',
+                B: '<ul><li>CEO o emprendedor</li><li>Gerencia o management</li><li>Leyes (abogado)</li><li>Política o liderazgo público</li><li>Militar o operaciones</li></ul>',
+                C: '<ul><li>Investigación o desarrollo</li><li>Ingeniería o análisis de datos</li><li>Artes creativas (escritor, artista)</li><li>Medicina o programación</li><li>Arquitectura o psicología</li></ul>',
+                D: '<ul><li>Enfermería o cuidado de salud</li><li>Enseñanza o recursos humanos</li><li>Trabajo social</li><li>Administración o bibliotecario</li><li>Terapia o contabilidad rutinaria</li></ul>'
+            };
+
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
                 <h2>Tu Temperamento Principal: ${primary} (${secondaryText})</h2>
                 <p>${descriptions[primaryKey]}</p>
                 <h3>Fortalezas:</h3><p>${strengths[primaryKey]}</p>
                 <h3>Debilidades:</h3><p>${weaknesses[primaryKey]}</p>
+                <h3>Trabajos Óptimos:</h3>${jobs[primaryKey]}
                 <p>Puntajes: Sanguíneo ${scores.A} | Colérico ${scores.B} | Melancólico ${scores.C} | Flemático ${scores.D}</p>
                 <p>Basado en análisis de Grok (xAI) – ¡Compartí tu resultado!</p>
+                <button class="restart-btn" onclick="restartQuiz()">Volver a empezar</button>
             `;
             resultDiv.classList.add('show');
             resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            const resultDiv = document.getElementById('result');
+            resultDiv.classList.remove('show');
+            resultDiv.innerHTML = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
